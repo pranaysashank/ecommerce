@@ -1,0 +1,5 @@
+<form method=post action=@{RegisterR} enctype=#{enctype}>
+  <h3>Create Account
+  <br>
+  ^{widget}
+  <button .btn .btn-default .full-width type=submit>Sign up!
