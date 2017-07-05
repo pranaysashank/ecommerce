@@ -20,8 +20,17 @@ personForm :: AForm Handler Person
 personForm = Person
   <$> areq textField (bfs ("Your name" :: Text)) Nothing
   <*> areq intField (bfs ("Mobile number" :: Text)) Nothing
-  <*> aopt textField (bfs ("Email address (optional)" :: Text)) Nothing
-  <*> areq passwordField (bfs ("Password" :: Text)) Nothing
+  <*> aopt personEmailField (bfs ("Email address (optional)" :: Text)) Nothing
+  <*> areq personPasswordField (bfs ("Password" :: Text)) Nothing
+  where
+    emailErrorMessage :: Text
+    emailErrorMessage = "An account with the given email account exists"
+
+    passwordErrorMessage :: Text
+    passwordErrorMessage = "Your password should be at least 8 characters long"
+
+    personEmailField = checkBool (/= "pranaysashank@gmail.com") emailErrorMessage emailField
+    personPasswordField = checkBool (\pw -> length pw > 8) passwordErrorMessage passwordField
 
 getRegisterR :: Handler Html
 getRegisterR = do
